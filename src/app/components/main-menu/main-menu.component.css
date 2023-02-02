@@ -1,0 +1,72 @@
+.col-3 {
+    background-color: rgb(5,72,71);
+    height: 100vh;
+}
+
+.col-9 {
+    background-color: rgb(5,72,71);
+}
+
+.call {
+    width: 70%;
+    font-size: 13px;
+    color: white;
+}
+
+.btn {
+    width: 100%;
+    font-size: 12px;
+    height: 30px;
+}
+
+.table {
+    border-bottom: transparent !important;
+}
+
+td {
+    padding-top: 5% !important;
+}
+
+#video-wrapper {
+	text-align: center;
+    background-color: #343434;
+}
+
+#remote-video {
+	height: 99vh;
+}
+
+#local-video {
+    position: absolute;
+    right: 30%;
+	bottom: 1rem;
+	width: 9vw;
+	height: 9vw;
+    margin-right: 1%;
+	border: 3px solid white;
+	border-radius: 4px;
+}
+
+#boton {
+    z-index: 0;
+    background-color: rgba(209, 22, 22, 0.37) !important;
+    height: 75px;
+    width: 75px;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    bottom: 0;
+    margin-left: 25%;
+    margin-bottom: 3%;
+}
+
+#boton2 {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    bottom: 0;
+    margin-left: 8%;
+    margin-bottom: 3%;
+}
