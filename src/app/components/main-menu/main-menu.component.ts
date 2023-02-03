@@ -4,6 +4,8 @@ import { Observable, of } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 import { CallService } from 'src/app/services/call.service';
 import { CallinfoDialogComponent, DialogData } from 'src/app/dialog/callinfo-dialog/callinfo-dialog.component';
+import * as RFB from '@novnc/novnc/core/rfb';
+import { VideoCallComponent } from '../video-call/video-call.component';
 
 @Component({
   selector: 'app-main-menu',
@@ -18,6 +20,8 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   localVideo!: ElementRef<HTMLVideoElement>;
   @ViewChild('remoteVideo')
   remoteVideo!: ElementRef<HTMLVideoElement>;
+  
+  @ViewChild(VideoCallComponent) videocall:VideoCallComponent;
 
   constructor(public dialog: MatDialog, private callService: CallService) { 
     this.isCallStarted$ = this.callService.isCallStarted$;
@@ -53,7 +57,14 @@ export class MainMenuComponent implements OnInit, OnDestroy {
       )
       .subscribe(_  => { });
   }
-
+  public vnc(){
+    setTimeout(()=>{
+      this.videocall.connect('172.16.16.226');
+    },1000);
+  }
+  public closevnc(){
+    this.videocall.disconnect();
+  }
   public endCall() {
     this.callService.closeMediaCall();
   }

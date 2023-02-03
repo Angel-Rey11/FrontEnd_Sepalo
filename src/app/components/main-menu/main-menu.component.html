@@ -13,7 +13,7 @@
                     </button>
                   </div>
                   <div class="col">
-                    <button id="boton2" type="button" class="btn btn-success">
+                    <button id="boton2" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="vnc();">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pc-display-horizontal" viewBox="0 0 16 16">
                       <path d="M1.5 0A1.5 1.5 0 0 0 0 1.5v7A1.5 1.5 0 0 0 1.5 10H6v1H1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-5v-1h4.5A1.5 1.5 0 0 0 16 8.5v-7A1.5 1.5 0 0 0 14.5 0h-13Zm0 1h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .5-.5ZM12 12.5a.5.5 0 1 1 1 0 .5.5 0 0 1-1 0Zm2 0a.5.5 0 1 1 1 0 .5.5 0 0 1-1 0ZM1.5 12h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1ZM1 14.25a.25.25 0 0 1 .25-.25h5.5a.25.25 0 1 1 0 .5h-5.5a.25.25 0 0 1-.25-.25Z"></path>
                       </svg>
@@ -71,3 +71,26 @@
           </table>
     </div>
 </div>
+<!--Modal for VNC -->
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" Dragable>
+  <div class="modal-dialog" >
+    <div class="modal-content" maximize #maximize="maximize" >
+      <div class="modal-header dragable_touch" DragableHandler>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+        <button class="btn-close"
+        (click)="maximize.minimize()"> Min
+    </button>
+    <button class="btn-close"
+        (click)="maximize.maximize()"> MAx
+    </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closevnc()"></button>
+      </div>
+      <div class="modal-body">
+        <app-video-call></app-video-call>
+      </div>
+    </div>
+  </div>
+</div>
+
+

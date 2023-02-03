@@ -15,13 +15,21 @@ import { MatFormFieldModule } from "@angular/material/form-field"
 import { MatInputModule } from "@angular/material/input"
 import { FormsModule } from '@angular/forms';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { DragableDirective } from './directives/dragable.directive';
+import { DragableHandlerDirective } from './directives/dragable-handler.directive';
+import { MaximizeDirective } from './directives/maximize.directive';
+import { VideoCallComponent } from './components/video-call/video-call.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     MainMenuComponent,
-    CallinfoDialogComponent
+    CallinfoDialogComponent,
+    DragableDirective,
+    DragableHandlerDirective,
+    MaximizeDirective,
+    VideoCallComponent
   ],
   imports: [
     BrowserModule,

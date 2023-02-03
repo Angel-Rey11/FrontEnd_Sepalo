@@ -70,3 +70,28 @@ td {
     margin-left: 8%;
     margin-bottom: 3%;
 }
+
+
+
+
+
+
+/*MODAL*/
+  
+  #dragable_modal {
+    position: relative;
+  }
+  
+
+  
+  #staticBackdrop .modal-content {
+    /* padding: 20px; */
+    height: 400px;
+    overflow: hidden;
+    resize: both;
+    width: 500px;
+  }
+  
+.dragable_touch{
+    cursor: move;
+}
