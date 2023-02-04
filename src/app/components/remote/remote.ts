@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import * as RFB from '@novnc/novnc/core/rfb';
 
 @Component({
-  selector: 'app-video-call',
-  templateUrl: './video-call.component.html',
-  styleUrls: ['./video-call.component.css']
+  selector: 'app-remote',
+  templateUrl: './remote.html',
+  styleUrls: ['./remote.css']
 })
-export class VideoCallComponent implements OnInit {
+export class RemoteComponent implements OnInit {
   @ViewChild('windowVNC') window;
   private vnc:any
   private host = "172.16.16.119";  //test

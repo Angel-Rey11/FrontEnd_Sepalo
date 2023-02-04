@@ -5,7 +5,7 @@ import { filter, switchMap } from 'rxjs/operators';
 import { CallService } from 'src/app/services/call.service';
 import { CallinfoDialogComponent, DialogData } from 'src/app/dialog/callinfo-dialog/callinfo-dialog.component';
 import * as RFB from '@novnc/novnc/core/rfb';
-import { VideoCallComponent } from '../video-call/video-call.component';
+import { RemoteComponent } from '../remote/remote';
 
 @Component({
   selector: 'app-main-menu',
@@ -21,7 +21,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   @ViewChild('remoteVideo')
   remoteVideo!: ElementRef<HTMLVideoElement>;
   
-  @ViewChild(VideoCallComponent) videocall:VideoCallComponent;
+  @ViewChild(RemoteComponent) videocall:RemoteComponent;
 
   constructor(public dialog: MatDialog, private callService: CallService) { 
     this.isCallStarted$ = this.callService.isCallStarted$;

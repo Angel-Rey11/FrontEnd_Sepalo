@@ -71,10 +71,31 @@ td {
     margin-bottom: 3%;
 }
 
+#close {
+    border: transparent;
+    background-color: transparent !important;
+    width: 1%;
+}
 
+#full {
+    border: transparent;
+    background-color: transparent !important;
+    width: 1%;
+}
 
+#min {
+    border: transparent;
+    background-color: transparent !important;
+    width: 1%;
+}
 
+#row-width {
+    margin-left: 70%;
+}
 
+#col-width {
+    max-width: 25%;
+}
 
 /*MODAL*/
   
@@ -94,4 +115,9 @@ td {
   
 .dragable_touch{
     cursor: move;
+}
+
+.modal-header {
+    height: 10%;
+    background-color: rgb(5,72,71);
 }

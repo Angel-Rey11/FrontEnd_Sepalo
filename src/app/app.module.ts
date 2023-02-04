@@ -18,7 +18,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DragableDirective } from './directives/dragable.directive';
 import { DragableHandlerDirective } from './directives/dragable-handler.directive';
 import { MaximizeDirective } from './directives/maximize.directive';
-import { VideoCallComponent } from './components/video-call/video-call.component';
+import { RemoteComponent } from './components/remote/remote';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,7 @@ import { VideoCallComponent } from './components/video-call/video-call.component
     DragableDirective,
     DragableHandlerDirective,
     MaximizeDirective,
-    VideoCallComponent
+    RemoteComponent
   ],
   imports: [
     BrowserModule,
