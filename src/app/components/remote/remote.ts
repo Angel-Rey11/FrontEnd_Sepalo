@@ -36,7 +36,6 @@ export class RemoteComponent implements OnInit {
     } else {
       this.url = "ws";
     }
-    
 
     this.url += "://" + ip;
     if (this.port) {

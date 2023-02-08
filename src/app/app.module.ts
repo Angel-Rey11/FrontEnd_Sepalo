@@ -19,6 +19,7 @@ import { DragableDirective } from './directives/dragable.directive';
 import { DragableHandlerDirective } from './directives/dragable-handler.directive';
 import { MaximizeDirective } from './directives/maximize.directive';
 import { RemoteComponent } from './components/remote/remote';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { RemoteComponent } from './components/remote/remote';
     MatFormFieldModule,
     MatInputModule,
     ClipboardModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    HttpClientModule
   ],
   providers: [
     CallService
