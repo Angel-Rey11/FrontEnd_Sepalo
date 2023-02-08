@@ -8,7 +8,7 @@
                             <div class="login">
                                 <div class="group"> <label for="user" class="label form-label">Username</label> <input [(ngModel)]="userLogin" type="text" class="input" placeholder="Enter your username"> </div>
                                 <div class="group"> <label for="pass" class="label form-label">Password</label> <input [(ngModel)]="passLogin" type="password" class="input" data-type="password" placeholder="Enter your password"> </div>
-                                <div class="group"> <input type="submit" class="button" value="Sign In" (click)="click()"> </div>
+                                <div class="group"> <input type="submit" class="button" id="liveToastBtn" value="Sign In" (click)="click()"> </div>
                                 <div class="hr"></div>
                                 <div class="foot"> <a href="#">Forgot Password?</a> </div>
                             </div>
@@ -16,7 +16,7 @@
                                 <div class="group"> <label for="user" class="label form-label">Username</label> <input [(ngModel)]="userSign" id="user" type="text" class="input" placeholder="Create your Username"> </div>
                                 <div class="group"> <label for="pass" class="label form-label">Password</label> <input [(ngModel)]="passSign" id="pass" type="password" class="input" data-type="password" placeholder="Create your password"> </div>
                                 <div class="group"> <label for="pass" class="label form-label">Repeat Password</label> <input [(ngModel)]="passRepeat" id="pass" type="password" class="input" data-type="password" placeholder="Repeat your password"> </div>
-                                <div class="group"> <input type="submit" class="button" value="Sign Up" (click)="SignUp()"> </div>
+                                <div class="group"> <input type="submit" class="button" value="Sign Up" id="liveToastBtn3" (click)="SignUp()"> </div>
                             </div>
                         </div>
                     </div>
@@ -24,4 +24,39 @@
             </div>
         </div>
     </div>
+
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+            Usuario no válido o contraseña incorrecta
+            </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    </div>
+
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="liveToast2" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+            Login Correcto
+            </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    </div>
+
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="liveToast3" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+            Usuario creado correctamente
+            </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    </div>
   </div>
+
+

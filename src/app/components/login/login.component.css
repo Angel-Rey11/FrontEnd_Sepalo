@@ -188,3 +188,19 @@ a {
     margin-top: 7%;
     font-size: 12px;
 }
+
+#liveToast {
+    background-color: rgba(255, 0, 0, 0.562) !important;
+}
+
+#liveToast2 {
+    background-color: green !important;
+}
+
+#liveToast3 {
+    background-color: green !important;
+}
+
+.toast-body {
+    color: white;
+}

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../model/User';
 import { environment } from 'src/environments/environment';
@@ -17,7 +17,8 @@ export class UserService {
   }
 
   public postUser(user : User): Observable<User> {
-    return this.http.post<User>(`${environment.serverURL}/api/User`, user);
+    let reqHeaders = new HttpHeaders().set('Content-Type','application/json');
+    return this.http.post<User>(`${environment.serverURL}/api/User`, JSON.stringify(user), {headers:reqHeaders});
   }
 
   public getUser(username: string, password:string): Observable<User> {
