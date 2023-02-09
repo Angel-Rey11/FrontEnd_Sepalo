@@ -49,6 +49,9 @@ export class LoginComponent implements OnInit {
         const toast = new bootstrap.Toast(toastLiveExample)
     
         toast.show()
+        this.userSign = '';
+        this.passSign = '';
+        this.passRepeat = '';
     } else {
       console.log("No se ha podido insertar el usuario");
     }
