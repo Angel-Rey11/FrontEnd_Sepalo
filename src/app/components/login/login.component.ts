@@ -25,57 +25,41 @@ export class LoginComponent implements OnInit {
   }
 
   async click() {
-    const result = await this.http.getUser(this.userLogin,this.passLogin).toPromise();
+    const result = await this.http.getUser(this.userLogin,this.convertTextLogin()).toPromise();
     
     if(result != null) {
-        const toastTrigger = document.getElementById('liveToastBtn')
-        const toastLiveExample = document.getElementById('liveToast2')
-        if (toastTrigger) {
-            toastTrigger.addEventListener('click', () => {
-            const toast = new bootstrap.Toast(toastLiveExample)
-      
-          toast.show()
-        })
-      }
-      this.router.navigate(['/main-menu']);
+        this.router.navigate(['/main-menu']);
     } else {
-      const toastTrigger = document.getElementById('liveToastBtn')
       const toastLiveExample = document.getElementById('liveToast')
-      if (toastTrigger) {
-        toastTrigger.addEventListener('click', () => {
           const toast = new bootstrap.Toast(toastLiveExample)
       
           toast.show()
-        })
       }
     }
-  }
 
   async SignUp() {
     const user: User = {
       username: this.userSign,
-      password: this.convertText()
+      password: this.convertTextSign()
     };
     
     if(user != null && this.passSign == this.passRepeat) {
-      const result = await this.http.postUser(user).toPromise();
-      const toastTrigger = document.getElementById('liveToastBtn3')
+      await this.http.postUser(user).toPromise();
       const toastLiveExample = document.getElementById('liveToast3')
-      if (toastTrigger) {
-        toastTrigger.addEventListener('click', () => {
         const toast = new bootstrap.Toast(toastLiveExample)
     
         toast.show()
-      })
-      }
-      console.log(result);
     } else {
       console.log("No se ha podido insertar el usuario");
     }
     
   }
 
-  convertText(): string {
+  convertTextSign(): string {
     return SHA256(this.passSign).toString();
+  }
+
+  convertTextLogin(): string {
+    return SHA256(this.passLogin).toString();
   }
 }

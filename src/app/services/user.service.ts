@@ -16,9 +16,17 @@ export class UserService {
     return this.http.get<User[]>(`${environment.serverURL}/api/User/GetAll`);
   }
 
-  public postUser(user : User): Observable<User> {
-    let reqHeaders = new HttpHeaders().set('Content-Type','application/json');
-    return this.http.post<User>(`${environment.serverURL}/api/User`, JSON.stringify(user), {headers:reqHeaders});
+  public postUser(user : User): Observable<any> {
+    let data:User ={
+      id:user.id,
+      username:user.username,
+      password:user.password
+    }
+    return this.http.post<any>(`${environment.serverURL}/api/User`, data, {
+      headers: { "Access-Control-Allow-Headers": "*", // this will allow all CORS requests
+      "Access-Control-Allow-Methods": 'OPTIONS,POST,GET', // this states the allowed methods
+      "Content-Type": "application/json" }
+    });
   }
 
   public getUser(username: string, password:string): Observable<User> {
