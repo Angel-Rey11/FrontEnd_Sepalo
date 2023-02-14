@@ -6,6 +6,9 @@ import { CallService } from 'src/app/services/call.service';
 import { CallinfoDialogComponent, DialogData } from 'src/app/dialog/callinfo-dialog/callinfo-dialog.component';
 import * as RFB from '@novnc/novnc/core/rfb';
 import { RemoteComponent } from '../remote/remote';
+import { Call } from 'src/app/model/Call';
+import { CallBDService } from 'src/app/services/call-bd.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-main-menu',
@@ -15,6 +18,7 @@ import { RemoteComponent } from '../remote/remote';
 export class MainMenuComponent implements OnInit, OnDestroy {
   public isCallStarted$: Observable<boolean>;
   private peerId: string;
+  public Call:Call[];
 
   @ViewChild('localVideo')
   localVideo!: ElementRef<HTMLVideoElement>;
@@ -23,7 +27,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   
   @ViewChild(RemoteComponent) videocall:RemoteComponent;
 
-  constructor(public dialog: MatDialog, private callService: CallService) { 
+  constructor(public dialog: MatDialog, private callService: CallService, private readonly http:CallBDService, private readonly http2:UserService) { 
     this.isCallStarted$ = this.callService.isCallStarted$;
     this.peerId = this.callService.initPeer();
   }
@@ -32,7 +36,9 @@ export class MainMenuComponent implements OnInit, OnDestroy {
     this.callService.destroyPeer();
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.Call = await this.http.getAllCalls().toPromise();
+    console.log(this.Call);
     this.callService.localStream$
       .pipe(filter(res => !!res))
       .subscribe((stream: MediaProvider | null) => this.localVideo.nativeElement.srcObject = stream)
@@ -69,4 +75,10 @@ export class MainMenuComponent implements OnInit, OnDestroy {
     this.callService.closeMediaCall();
   }
 
+  public update(Call:Call) {
+    const id = Call.id;
+    Call.estado = 2;
+    this.http.updateCall(id, Call);
+    console.log(Call);
+  }
 }
