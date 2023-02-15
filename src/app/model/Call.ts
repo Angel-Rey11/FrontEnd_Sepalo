@@ -5,6 +5,6 @@ export interface Call {
     p2p:string,
     estado:Estado,
     date:Date,
-    CajeroId:number,
-    UserId?:number
+    cajeroId:number,
+    userId?:number
 }
