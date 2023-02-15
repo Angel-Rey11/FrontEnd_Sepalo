@@ -3,8 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, of } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 import { CallService } from 'src/app/services/call.service';
-import { CallinfoDialogComponent, DialogData } from 'src/app/dialog/callinfo-dialog/callinfo-dialog.component';
-import * as RFB from '@novnc/novnc/core/rfb';
 import { RemoteComponent } from '../remote/remote';
 import { Call } from 'src/app/model/Call';
 import { CallBDService } from 'src/app/services/call-bd.service';
@@ -47,22 +45,6 @@ export class MainMenuComponent implements OnInit, OnDestroy {
       .subscribe((stream: MediaProvider | null) => this.remoteVideo.nativeElement.srcObject = stream)
   }
 
-  public showModal(joinCall: boolean): void {
-    if(!this.peerId){  alert("Error en la comunicación"); return;}
-    let dialogData: DialogData = joinCall ? ({ peerId: undefined, joinCall: true }) : ({ peerId: this.peerId, joinCall: false });
-    const dialogRef = this.dialog.open(CallinfoDialogComponent, {
-      width: '250px',
-      data: dialogData
-    });
-
-    dialogRef.afterClosed()
-      .pipe(
-        switchMap(peerId => 
-          joinCall ? of(this.callService.establishMediaCall(peerId)) : of(this.callService.enableCallAnswer())
-        ),
-      )
-      .subscribe(_  => { });
-  }
   public vnc(){
     setTimeout(()=>{
       this.videocall.connect('172.16.16.226');
@@ -76,9 +58,10 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   }
 
   public update(Call:Call) {
-    const id = Call.id;
-    Call.estado = 2;
-    this.http.updateCall(id, Call);
-    console.log(Call);
+    //const id = Call.id;
+    //Call.estado = 1;
+    //this.http.updateCall(id, Call);
+    //console.log(Call);
+    this.callService.establishMediaCall(Call.p2p);
   }
 }

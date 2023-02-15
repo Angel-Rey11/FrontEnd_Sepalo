@@ -26,7 +26,6 @@
               </div>
             </div>
         </div>
-        <button mat-raised-button class="m-2" [disabled]="isCallStarted$ | async" (click)="showModal(true)">Join Call</button>
     </div>
     <div class="col-3">
         <table *ngFor="let Call of this.Call" class="table">

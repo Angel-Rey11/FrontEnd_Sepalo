@@ -7,7 +7,6 @@ import { MainMenuComponent } from './components/main-menu/main-menu.component';
 import { LoginComponent } from './components/login/login.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CallService } from './services/call.service';
-import { CallinfoDialogComponent } from './dialog/callinfo-dialog/callinfo-dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button'
 import { MatDialogModule } from '@angular/material/dialog';
@@ -26,7 +25,6 @@ import {HttpClientModule} from '@angular/common/http';
     AppComponent,
     LoginComponent,
     MainMenuComponent,
-    CallinfoDialogComponent,
     DragableDirective,
     DragableHandlerDirective,
     MaximizeDirective,
