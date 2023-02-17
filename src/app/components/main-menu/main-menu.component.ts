@@ -25,7 +25,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   
   @ViewChild(RemoteComponent) videocall:RemoteComponent;
 
-  constructor(public dialog: MatDialog, private callService: CallService, private readonly http:CallBDService, private readonly http2:UserService, private signal:SignalrService) { 
+  constructor(public dialog: MatDialog, private callService: CallService, private readonly http:CallBDService, private readonly http2:UserService, public signal:SignalrService) { 
     this.isCallStarted$ = this.callService.isCallStarted$;
   }
 
@@ -36,8 +36,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   async ngOnInit(): Promise<void> {
     try{
       await this.signal.startConnection();  //conexión
-      this.signal.addTransferChartDataListener(this.Call)
-      console.log(this.Call);
+      this.signal.addTransferChartDataListener();
     }catch(err){
       console.error(err);
     }
@@ -49,7 +48,6 @@ export class MainMenuComponent implements OnInit, OnDestroy {
       .pipe(filter(res => !!res))
       .subscribe((stream: MediaProvider | null) => this.remoteVideo.nativeElement.srcObject = stream)
   }
-
 
   private gestionaCalls(data){
     //this.Call = data;

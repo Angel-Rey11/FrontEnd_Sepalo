@@ -6,7 +6,7 @@ import { Call } from '../model/Call';
   providedIn: 'root'
 })
 export class SignalrService {
-  public data: Call[];
+  public data: Call[] = null;
   private _connected:boolean = false;
   private hubConnection: signalR.HubConnection
     public startConnection = () => {
@@ -26,10 +26,11 @@ export class SignalrService {
       
     }
     
-    public addTransferChartDataListener = async (call:Call[]) :Promise<void> => {
+    public addTransferChartDataListener = async () :Promise<void> => {
       await this.hubConnection.on('transferchartdata', (data) => {
-        call = data;
-        console.log(call);
+        this.data = data;
+        console.log(data);
+        return this.data;
       });
     }
 
