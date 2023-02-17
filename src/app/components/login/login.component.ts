@@ -4,6 +4,7 @@ import { UserService } from 'src/app/services/user.service';
 import * as CryptoJS from 'crypto-js';
 import { SHA256 } from 'crypto-js';
 import { User } from 'src/app/model/User';
+
 declare var bootstrap: any;
 
 
@@ -21,9 +22,10 @@ export class LoginComponent implements OnInit {
 
   constructor(private router:Router,private readonly http: UserService) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    
   }
-
+  
   async click() {
     const result = await this.http.getUser(this.userLogin,this.convertTextLogin()).toPromise();
     

@@ -7,6 +7,7 @@ import { RemoteComponent } from '../remote/remote';
 import { Call } from 'src/app/model/Call';
 import { CallBDService } from 'src/app/services/call-bd.service';
 import { UserService } from 'src/app/services/user.service';
+import { SignalrService } from 'src/app/services/signalr.service';
 
 @Component({
   selector: 'app-main-menu',
@@ -15,7 +16,6 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class MainMenuComponent implements OnInit, OnDestroy {
   public isCallStarted$: Observable<boolean>;
-  private peerId: string;
   public Call:Call[];
 
   @ViewChild('localVideo')
@@ -25,9 +25,8 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   
   @ViewChild(RemoteComponent) videocall:RemoteComponent;
 
-  constructor(public dialog: MatDialog, private callService: CallService, private readonly http:CallBDService, private readonly http2:UserService) { 
+  constructor(public dialog: MatDialog, private callService: CallService, private readonly http:CallBDService, private readonly http2:UserService, private signal:SignalrService) { 
     this.isCallStarted$ = this.callService.isCallStarted$;
-    this.peerId = this.callService.initPeer();
   }
 
   ngOnDestroy(): void {
@@ -35,14 +34,28 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    this.Call = await this.http.getAllCalls().toPromise();
-    console.log(this.Call);
+    try{
+      await this.signal.startConnection();  //conexión
+      this.signal.addTransferChartDataListener(this.Call)
+      console.log(this.Call);
+    }catch(err){
+      console.error(err);
+    }
+
     this.callService.localStream$
       .pipe(filter(res => !!res))
       .subscribe((stream: MediaProvider | null) => this.localVideo.nativeElement.srcObject = stream)
     this.callService.remoteStream$
       .pipe(filter(res => !!res))
       .subscribe((stream: MediaProvider | null) => this.remoteVideo.nativeElement.srcObject = stream)
+  }
+
+
+  private gestionaCalls(data){
+    //this.Call = data;
+    console.log("LLAMADA.");
+    console.log(data);
+    console.log("ROTO")
   }
 
   public vnc(){
@@ -62,6 +75,6 @@ export class MainMenuComponent implements OnInit, OnDestroy {
     //Call.estado = 1;
     //this.http.updateCall(id, Call);
     //console.log(Call);
-    this.callService.establishMediaCall(Call.p2p);
+    //this.callService.establishMediaCall(Call.p2p);
   }
 }

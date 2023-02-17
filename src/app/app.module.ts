@@ -19,6 +19,7 @@ import { DragableHandlerDirective } from './directives/dragable-handler.directiv
 import { MaximizeDirective } from './directives/maximize.directive';
 import { RemoteComponent } from './components/remote/remote';
 import {HttpClientModule} from '@angular/common/http';
+import { SignalrService } from './services/signalr.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import {HttpClientModule} from '@angular/common/http';
     HttpClientModule
   ],
   providers: [
-    CallService
+    CallService,
+    SignalrService
   ],
   bootstrap: [AppComponent]
 })
