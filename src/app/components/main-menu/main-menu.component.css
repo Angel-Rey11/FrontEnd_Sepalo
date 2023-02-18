@@ -121,3 +121,70 @@ td {
     height: 10%;
     background-color: rgb(5,72,71);
 }
+
+.div1 {
+    height: 20%;
+}
+
+.div2 {
+    height: 75%;
+}
+
+.accordion-item {
+    background-color:transparent !important;
+}
+
+.accordion-body {
+    background-color: transparent;
+    text-align: center;
+  }
+  
+.accordion-item {
+   --bs-accordion-border-color: transparent;
+  }
+  
+.accordion {
+   --bs-accordion-active-bg: transparent;
+  }
+  
+.accordion {
+    --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem transparent;
+}
+
+.accordion-button {
+    color: white !important;
+}
+
+.accordion-button.collapsed {
+    background: transparent;
+}
+
+.accordion-button:after {
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+}
+
+.list-group-item {
+    background-color: transparent !important;
+    border: none;
+}
+
+.call {
+    color: white;
+    font-size: 16px;
+    
+}
+
+#InCallBack {
+    background-color: rgba(255, 0, 0, 0.336);
+    height: 50px;
+    border-radius: 30px;
+}
+
+.InCallFont {
+    color: white;
+    font-size: 18px;
+}
+
+#ButtonInCall {
+    border-radius: 30px !important;
+}
