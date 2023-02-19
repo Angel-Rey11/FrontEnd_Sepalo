@@ -4,6 +4,7 @@ import { UserService } from 'src/app/services/user.service';
 import * as CryptoJS from 'crypto-js';
 import { SHA256 } from 'crypto-js';
 import { User } from 'src/app/model/User';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 declare var bootstrap: any;
 
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit {
   passSign: string = '';
   passRepeat: string = '';
 
-  constructor(private router:Router,private readonly http: UserService) { }
+  constructor(private router:Router,private readonly http: UserService, private local:LocalStorageService) { }
 
   async ngOnInit() {
     
@@ -31,6 +32,7 @@ export class LoginComponent implements OnInit {
     
     if(result != null) {
         this.http.UserLog = result;
+        this.local.create(result);
         this.router.navigate(['/main-menu']);
     } else {
       const toastLiveExample = document.getElementById('liveToast')

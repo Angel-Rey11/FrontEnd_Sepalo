@@ -40,12 +40,17 @@
               <div class="accordion-body">
                 <div class="InCall"> 
                   <div class="container text-center">
-                    <div id="InCallBack" class="row align-items-center">
+                    <div *ngIf="showCall" id="InCallBack" class="row align-items-center">
                       <div class="col">
-                        <span class="InCallFont"> Cajero 1 </span>
+                        <span class="InCallFont"> Cajero {{id}} </span>
                       </div>
                       <div class="col">
                         <button id="ButtonInCall" type="button" class="btn btn-danger">En Curso</button>
+                      </div>
+                    </div>
+                    <div *ngIf="!showCall" id="InCallBack" class="row align-items-center"> 
+                      <div class="col">
+                        <span class="NoCallFont"> NO HAY LLAMADA EN CURSO </span>
                       </div>
                     </div>
                   </div>

@@ -29,7 +29,6 @@ export class SignalrService {
     public addTransferChartDataListener = async () :Promise<void> => {
       await this.hubConnection.on('transferchartdata', (data) => {
         this.data = data;
-        console.log(data);
         return this.data;
       });
     }

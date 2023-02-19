@@ -21,7 +21,7 @@ export class CallBDService {
     return this.http.get<Call>(url);
   }
 
-  public updateCall(id:Number, Call:Call) {
-    this.http.put(`${environment.serverURL}/api/Call/Update/${id}`, Call);
+  public updateCall(id:Number, Call:Call) : Observable<Call> {
+    return this.http.put<Call>(`${environment.serverURL}/api/Call/Update/${id}`, Call);
   }
 }
