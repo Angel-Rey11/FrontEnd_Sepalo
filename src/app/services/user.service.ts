@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class UserService {
-  UserLog:User;
 
   constructor(private readonly http: HttpClient) { }
 

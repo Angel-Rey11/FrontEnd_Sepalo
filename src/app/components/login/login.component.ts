@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
     const result = await this.http.getUser(this.userLogin,this.convertTextLogin()).toPromise();
     
     if(result != null) {
-        this.http.UserLog = result;
         this.local.create(result);
         this.router.navigate(['/main-menu']);
     } else {

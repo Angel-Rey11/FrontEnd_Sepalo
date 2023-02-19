@@ -10,6 +10,8 @@ import { UserService } from 'src/app/services/user.service';
 import { SignalrService } from 'src/app/services/signalr.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-main-menu',
   templateUrl: './main-menu.component.html',
@@ -19,6 +21,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   public isCallStarted$: Observable<boolean>;
   public Call:Call[];
   showCall:boolean = false;
+  showButton:boolean = false;
   id:number = null;
 
   @ViewChild('localVideo')
@@ -65,12 +68,27 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   }
 
   public endCall() {
-    this.callService.closeMediaCall();
+    //this.callService.closeMediaCall();
+    this.showButton = false;
     this.showCall = false;
+    /*
+    this.http.callIn.estado = 2;
+    this.http.updateCall(this.http.callIn.id,this.http.callIn).subscribe(
+      data => {
+        console.log("EXITO")
+      },
+      error => {
+        console.log("ERROR")
+      }
+    );
+    */
+    //this.CloseAccordion("collapseOne1");
+    //this.ExpandAccordion("collapseOne2");
   }
 
   public update(Call:Call) {
-    /**
+    this.showButton = true;
+    /*
     const user = this.local.getUser();
     Call.estado = 1;
     Call.userId = user.id;
@@ -86,5 +104,21 @@ export class MainMenuComponent implements OnInit, OnDestroy {
     this.showCall = true;
     this.id = Call.cajeroId;
     //this.callService.establishMediaCall(Call.p2p);
+    this.http.callIn = Call;
+    //this.CloseAccordion("collapseOne2");
+  }
+
+  public CloseAccordion(id:string) {
+    var myCollapse = document.getElementById(id);
+    var bsCollapse = new bootstrap.Collapse(myCollapse, {
+    show: false
+  });
+  }
+
+  public ExpandAccordion(id:string) {
+    var myCollapse = document.getElementById(id);
+    var bsCollapse = new bootstrap.Collapse(myCollapse, {
+    show: true
+  });
   }
 }
