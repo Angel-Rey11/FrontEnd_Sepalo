@@ -45,7 +45,6 @@ export class CallService {
                 this.peer = new Peer(this.id, peerJsOptions);
                 return this.id;
             } catch (error) {
-                console.error(error);
                 return "";
             }
         }else{
@@ -56,11 +55,8 @@ export class CallService {
     public async establishMediaCall(remotePeerId: string,callback?) {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-            console.log(remotePeerId)
-            console.log(this.peer)
             const connection = this.peer.connect(remotePeerId);
             connection.on('error', err => {
-                console.error(err);
                 this.snackBar.open('error', 'Close');
             });
             
@@ -80,7 +76,6 @@ export class CallService {
                 });
             this.mediaCall.on('error', err => {
                 this.snackBar.open('error', 'Close');
-                console.error(err);
                 this.isCallStartedBs.next(false);
             });
             this.mediaCall.on('iceStateChanged',(e)=>{
@@ -93,7 +88,6 @@ export class CallService {
             this.mediaCall.on('close', () => this.onCallClose());
         }
         catch (ex) {
-            console.error(ex);
             this.snackBar.open(ex, 'Close');
             this.isCallStartedBs.next(false);
         }
@@ -115,13 +109,11 @@ export class CallService {
                 this.mediaCall.on('error', err => {
                     this.snackBar.open('error', 'Close');
                     this.isCallStartedBs.next(false);
-                    console.error(err);
                 });
                 this.mediaCall.on('close', () => this.onCallClose());
             });            
         }
         catch (ex) {
-            console.error(ex);
             this.snackBar.open(ex, 'Close');
             this.isCallStartedBs.next(false);            
         }

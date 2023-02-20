@@ -9,10 +9,7 @@ import * as RFB from '@novnc/novnc/core/rfb';
 export class RemoteComponent implements OnInit {
   @ViewChild('windowVNC') window;
   private vnc:any
-  private host = "172.16.16.226";  //test
   private port = "5900";
-  private username = ''; //username of vnc
-  private password = "password"; // password of your vnc server
   private target;
   private path = "";
   public connected = false;
@@ -26,7 +23,7 @@ export class RemoteComponent implements OnInit {
     
   }
 
-  public connect(ip){
+  public connect(ip,username,password){
     if (window.location.protocol === "https:") {
       this.url = "wss";
     } else {
@@ -43,7 +40,7 @@ export class RemoteComponent implements OnInit {
     this.target=this.window.nativeElement;
 
     this.vnc = new RFB.default(this.target, this.url, {
-      credentials: { password: this.password,username: this.username,target:this.target },
+      credentials: { password: password,username: username,target:this.target },
     });
   }
   public disconnect(){

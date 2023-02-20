@@ -194,3 +194,8 @@ td {
 #ButtonInCall {
     border-radius: 30px !important;
 }
+
+#spinner {
+    display: none; 
+    z-index: 9999;
+  }

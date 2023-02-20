@@ -9,6 +9,7 @@ import { CallBDService } from 'src/app/services/call-bd.service';
 import { UserService } from 'src/app/services/user.service';
 import { SignalrService } from 'src/app/services/signalr.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { CajeroService } from 'src/app/services/cajero.service';
 
 declare var bootstrap: any;
 
@@ -22,6 +23,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   public Call:Call[];
   showCall:boolean = false;
   showButton:boolean = false;
+  showLocalVideo:boolean = false;
   id:number = null;
 
   @ViewChild('localVideo')
@@ -35,7 +37,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   @ViewChild('mySpan') mySpan: HTMLSpanElement;
 
   constructor(public dialog: MatDialog, private callService: CallService, private readonly http:CallBDService, private readonly http2:UserService, public signal:SignalrService,
-    private local:LocalStorageService) { 
+    private local:LocalStorageService, public cajeroService : CajeroService) { 
     this.isCallStarted$ = this.callService.isCallStarted$;
   }
 
@@ -44,6 +46,8 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
+    //const spinner = document.getElementById('spinner');
+    //spinner.style.display = 'block';
     try{
       this.callService.initPeer();
       await this.signal.startConnection();  //conexión
@@ -60,43 +64,53 @@ export class MainMenuComponent implements OnInit, OnDestroy {
     this.callService.remoteStream$
       .pipe(filter(res => !!res))
       .subscribe((stream: MediaProvider | null) => {
-        console.log("OJOJOJO")
         this.remoteVideo.nativeElement.srcObject = stream;
 
         })
   }
 
   public vnc(){
-    setTimeout(()=>{
-      this.videocall.connect('172.16.16.226');
-    },1000);
+    this.cajeroService.getCashier(this.http.callIn.cajeroId).subscribe(
+      cajero => {
+        console.log(cajero);
+        //this.videocall.connect(cajero.ip,cajero.username,cajero.password);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   public closevnc(){
-    this.videocall.disconnect();
+    //this.videocall.disconnect();
   }
 
   public endCall() {
-    this.callService.destroyPeer();
-    this.callService.initPeer();
+    //this.callService.destroyPeer();
+    //this.callService.initPeer();
     this.showButton = false;
     this.showCall = false;
+    this.showLocalVideo = false;
+    /*
     this.http.callIn.estado = 2;
     this.http.updateCall(this.http.callIn.id,this.http.callIn).subscribe(
       data => {
         console.log("EXITO")
       },
       error => {
-        console.log("ERROR")
+        console.log(error)
       }
     );
     this.remoteVideo.nativeElement.srcObject=undefined;
     //this.CloseAccordion("collapseOne1");
     //this.ExpandAccordion("collapseOne2");
+    */
   }
 
   public update(Call:Call) {
+    this.showLocalVideo = true;
     this.showButton = true;
+    /*
     const user = this.local.getUser();
     Call.estado = 1;
     Call.userId = user.id;
@@ -105,16 +119,18 @@ export class MainMenuComponent implements OnInit, OnDestroy {
         console.log("EXITO")
       },
       error => {
-        console.log("ERROR")
+        console.log(error)
       }
     );
+    */
     this.showCall = true;
     this.id = Call.cajeroId;
+    /*
     this.callService.establishMediaCall(Call.p2p,()=>{
       this.endCall();
     });
+    */
     this.http.callIn = Call;
-   
     //this.CloseAccordion("collapseOne2");
   }
 
