@@ -26,6 +26,7 @@ export class CallService {
     constructor(private snackBar: MatSnackBar) { }
 
     public initPeer(): string{
+        console.log("INIT PEER")
         if (!this.peer || this.peer.disconnected) {
             const peerJsOptions: peerjs.PeerJSOption = {
                 debug: 3,
@@ -52,15 +53,17 @@ export class CallService {
         }
     }
 
-    public async establishMediaCall(remotePeerId: string) {
+    public async establishMediaCall(remotePeerId: string,callback?) {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-
+            console.log(remotePeerId)
+            console.log(this.peer)
             const connection = this.peer.connect(remotePeerId);
             connection.on('error', err => {
                 console.error(err);
                 this.snackBar.open('error', 'Close');
             });
+            
 
             this.mediaCall = this.peer.call(remotePeerId, stream);
             if (!this.mediaCall) {
@@ -80,6 +83,13 @@ export class CallService {
                 console.error(err);
                 this.isCallStartedBs.next(false);
             });
+            this.mediaCall.on('iceStateChanged',(e)=>{
+                if(e=="disconnected"){
+                    if(callback){
+                        callback();
+                    }
+                }
+            })
             this.mediaCall.on('close', () => this.onCallClose());
         }
         catch (ex) {

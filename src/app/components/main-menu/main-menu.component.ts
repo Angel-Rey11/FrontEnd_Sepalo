@@ -28,6 +28,8 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   localVideo!: ElementRef<HTMLVideoElement>;
   @ViewChild('remoteVideo')
   remoteVideo!: ElementRef<HTMLVideoElement>;
+
+  @ViewChild('remoteVideoContainer') container!: ElementRef<HTMLDivElement>;
   
   @ViewChild(RemoteComponent) videocall:RemoteComponent;
   @ViewChild('mySpan') mySpan: HTMLSpanElement;
@@ -43,6 +45,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     try{
+      this.callService.initPeer();
       await this.signal.startConnection();  //conexión
       this.signal.addTransferChartDataListener();
     }catch(err){
@@ -51,10 +54,16 @@ export class MainMenuComponent implements OnInit, OnDestroy {
 
     this.callService.localStream$
       .pipe(filter(res => !!res))
-      .subscribe((stream: MediaProvider | null) => this.localVideo.nativeElement.srcObject = stream)
+      .subscribe((stream: MediaProvider | null) =>{
+        this.localVideo.nativeElement.srcObject = stream;
+      }) 
     this.callService.remoteStream$
       .pipe(filter(res => !!res))
-      .subscribe((stream: MediaProvider | null) => this.remoteVideo.nativeElement.srcObject = stream)
+      .subscribe((stream: MediaProvider | null) => {
+        console.log("OJOJOJO")
+        this.remoteVideo.nativeElement.srcObject = stream;
+
+        })
   }
 
   public vnc(){
@@ -68,10 +77,10 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   }
 
   public endCall() {
-    //this.callService.closeMediaCall();
+    this.callService.destroyPeer();
+    this.callService.initPeer();
     this.showButton = false;
     this.showCall = false;
-    /*
     this.http.callIn.estado = 2;
     this.http.updateCall(this.http.callIn.id,this.http.callIn).subscribe(
       data => {
@@ -81,14 +90,13 @@ export class MainMenuComponent implements OnInit, OnDestroy {
         console.log("ERROR")
       }
     );
-    */
+    this.remoteVideo.nativeElement.srcObject=undefined;
     //this.CloseAccordion("collapseOne1");
     //this.ExpandAccordion("collapseOne2");
   }
 
   public update(Call:Call) {
     this.showButton = true;
-    /*
     const user = this.local.getUser();
     Call.estado = 1;
     Call.userId = user.id;
@@ -100,11 +108,13 @@ export class MainMenuComponent implements OnInit, OnDestroy {
         console.log("ERROR")
       }
     );
-    */
     this.showCall = true;
     this.id = Call.cajeroId;
-    //this.callService.establishMediaCall(Call.p2p);
+    this.callService.establishMediaCall(Call.p2p,()=>{
+      this.endCall();
+    });
     this.http.callIn = Call;
+   
     //this.CloseAccordion("collapseOne2");
   }
 

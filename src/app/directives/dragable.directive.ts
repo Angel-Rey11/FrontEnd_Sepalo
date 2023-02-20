@@ -22,10 +22,7 @@ handleElement: HTMLElement;
     @Inject(DOCUMENT) private document: any
   ) {}
 
-  ngOnInit(): void {
-    this.element = this.elementRef.nativeElement as HTMLElement;
-    this.initDrag();
-  }
+
 // 2 Modified
 ngAfterViewInit(): void {
   this.element = this.elementRef.nativeElement as HTMLElement;
@@ -50,6 +47,7 @@ ngAfterViewInit(): void {
     let dragSub: Subscription;
 
     // 3
+
     const dragStartSub = dragStart$.subscribe((event: MouseEvent) => {
       initialX = event.clientX - currentX;
       initialY = event.clientY - currentY;
@@ -66,7 +64,7 @@ ngAfterViewInit(): void {
           "translate3d(" + currentX + "px, " + currentY + "px, 0)";
       });
     });
-
+    
     // 5
     const dragEndSub = dragEnd$.subscribe(() => {
       initialX = currentX;
@@ -83,6 +81,7 @@ ngAfterViewInit(): void {
       dragSub,
       dragEndSub,
     ]);
+
   }
 
   ngOnDestroy(): void {
