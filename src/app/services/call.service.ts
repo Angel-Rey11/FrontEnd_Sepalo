@@ -152,7 +152,8 @@ export class CallService {
     public closeMediaCall() {
         this.mediaCall?.close();
         if (!this.mediaCall) {
-            this.onCallClose()
+            this.onCallClose();
+            //cerrar conexión???
         }
         this.isCallStartedBs.next(false);
     }

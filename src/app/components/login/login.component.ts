@@ -15,8 +15,8 @@ declare var bootstrap: any;
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  userLogin: string = '';
-  passLogin: string = '';
+  userLogin: string = 'Sergio';
+  passLogin: string = '1234';
   userSign: string = '';
   passSign: string = '';
   passRepeat: string = '';
