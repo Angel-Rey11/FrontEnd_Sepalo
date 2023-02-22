@@ -14,15 +14,17 @@ export class RemoteComponent implements OnInit {
   private path = "";
   public connected = false;
   private url:any;
+
   ngOnInit(): void {
-    // Read parameters specified in the URL query string
-    // By default, use the host and port of server that served this file
-    
-    // Build the websocket URL used to connect
-    //this.url = "ws";
-    
+
   }
 
+  /**
+   * Metodo para conectarse a la maquina en remoto
+   * @param ip del servidor que queremos conectarnos
+   * @param username del servidor (suele ser en blanco)
+   * @param password del servidor
+   */
   public connect(ip,username,password){
     if (window.location.protocol === "https:") {
       this.url = "wss";
@@ -43,6 +45,10 @@ export class RemoteComponent implements OnInit {
       credentials: { password: password,username: username,target:this.target },
     });
   }
+
+  /**
+   * Metodo para desconectarnos del remoto
+   */
   public disconnect(){
     this.vnc.disconnect();
   }

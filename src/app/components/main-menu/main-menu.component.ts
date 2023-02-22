@@ -41,10 +41,17 @@ export class MainMenuComponent implements OnInit, OnDestroy {
     this.isCallStarted$ = this.callService.isCallStarted$;
   }
 
+  /**
+   * Metodo para cuando salgamos del menu principal, eliminar y destruir el peer
+   */
   ngOnDestroy(): void {
     this.callService.destroyPeer();
   }
 
+  /**
+   * Metodo que se inicializa con el componente, inicia el peer y el socket para la transferencia de datos
+   * Obtiene los permisos para la camara y el audio
+   */
   async ngOnInit(): Promise<void> {
     //const spinner = document.getElementById('spinner');
     //spinner.style.display = 'block';
@@ -69,6 +76,10 @@ export class MainMenuComponent implements OnInit, OnDestroy {
         })
   }
 
+  /**
+   * Metodo para conectarnos en remoto, obtenemos el cajero pasandole la ID
+   * Y nos conectamos a la máquina mediante el metodo del servicio
+   */
   public vnc(){
     this.cajeroService.getCashier(this.http.callIn.cajeroId).subscribe(
       cajero => {
@@ -81,17 +92,24 @@ export class MainMenuComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Metodo para cerrar la conexion remota
+   */
   public closevnc(){
     //this.videocall.disconnect();
   }
 
+  /**
+   * Metodo para terminar llamada, donde actualizamos el estado de la llamada a 2, que seria
+   * cuando ha terminado la llamada
+   * Destruimos el peer y creamos uno nuevo para la siguiente conexion peer to peer
+   */
   public endCall() {
-    //this.callService.destroyPeer();
-    //this.callService.initPeer();
+    this.callService.destroyPeer();
+    this.callService.initPeer();
     this.showButton = false;
     this.showCall = false;
     this.showLocalVideo = false;
-    /*
     this.http.callIn.estado = 2;
     this.http.updateCall(this.http.callIn.id,this.http.callIn).subscribe(
       data => {
@@ -104,13 +122,16 @@ export class MainMenuComponent implements OnInit, OnDestroy {
     this.remoteVideo.nativeElement.srcObject=undefined;
     //this.CloseAccordion("collapseOne1");
     //this.ExpandAccordion("collapseOne2");
-    */
   }
 
+  /**
+   * Metodo para conectarnos a la llamada, updatea la llamada con el estado a 1, que seria en llamada
+   * y tambien con el id del usuario que atiende la llamada
+   * @param Call llamada que queremos updatear y guardar para el posterior uso
+   */
   public update(Call:Call) {
     this.showLocalVideo = true;
     this.showButton = true;
-    /*
     const user = this.local.getUser();
     Call.estado = 1;
     Call.userId = user.id;
@@ -122,18 +143,19 @@ export class MainMenuComponent implements OnInit, OnDestroy {
         console.log(error)
       }
     );
-    */
     this.showCall = true;
     this.id = Call.cajeroId;
-    /*
     this.callService.establishMediaCall(Call.p2p,()=>{
       this.endCall();
     });
-    */
     this.http.callIn = Call;
     //this.CloseAccordion("collapseOne2");
   }
 
+  /**
+   * Metodo para cerrar el accordion cuando pulsamos un boton
+   * @param id del accordion que queremos cerrar
+   */
   public CloseAccordion(id:string) {
     var myCollapse = document.getElementById(id);
     var bsCollapse = new bootstrap.Collapse(myCollapse, {
@@ -141,6 +163,10 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   });
   }
 
+  /**
+   * Metodo para abrir el accordion cuando pulsemos un boton
+   * @param id del accordion que queremos abrir
+   */
   public ExpandAccordion(id:string) {
     var myCollapse = document.getElementById(id);
     var bsCollapse = new bootstrap.Collapse(myCollapse, {

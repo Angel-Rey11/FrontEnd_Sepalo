@@ -11,6 +11,11 @@ export class CajeroService {
 
   constructor(private readonly http: HttpClient) { }
 
+  /**
+   * Metodo para traer el cajero pasandole una id
+   * @param id del cajero que queremos traer
+   * @returns observable de tipo cajero
+   */
   public getCashier(id:number):Observable<Cajero> {
     const url = `${environment.serverURL}/api/Cajero/get/${id}`;
     return this.http.get<Cajero>(url);

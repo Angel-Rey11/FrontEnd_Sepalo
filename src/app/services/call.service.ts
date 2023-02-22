@@ -25,6 +25,10 @@ export class CallService {
 
     constructor(private snackBar: MatSnackBar) { }
 
+    /**
+     * Metodo que inicializa un peer para poder conectarnos a llamada mediante los servidores stun
+     * @returns el id que crea automaticamente para la conexiom
+     */
     public initPeer(): string{
         console.log("INIT PEER")
         if (!this.peer || this.peer.disconnected) {
@@ -52,6 +56,11 @@ export class CallService {
         }
     }
 
+    /**
+     * Metodo para unirse a una llamada ya disponible
+     * @param remotePeerId id que genera la otra llamada y se la pasamos para unirnos mediante la API
+     * @param callback funcion callback para poder colgar y que haga su logica
+     */
     public async establishMediaCall(remotePeerId: string,callback?) {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
@@ -93,6 +102,11 @@ export class CallService {
         }
     }
 
+    /**
+     * Metodo para empezar una llamada, esto genera una ID que tendrá que poner el otro usuario
+     * que quiera conectarse
+     * En nuestro caso, no utilizamos este metodo, ya que nunca iniciamos una llamada, solo nos unimos a ella
+     */
     public async enableCallAnswer() {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
@@ -119,6 +133,10 @@ export class CallService {
         }
     }
 
+    /**
+     * Metodo para terminar la llamada
+     * Lo usamos en DestroyPeer
+     */
     private onCallClose() {
         this.remoteStreamBs?.value.getTracks().forEach(track => {
             track.stop();
@@ -126,9 +144,11 @@ export class CallService {
         this.localStreamBs?.value.getTracks().forEach(track => {
             track.stop();
         });
-        this.snackBar.open('Call Ended', 'Close');
     }
 
+    /**
+     * Metodo para cerrar la llamada
+     */
     public closeMediaCall() {
         this.mediaCall?.close();
         if (!this.mediaCall) {
@@ -137,6 +157,9 @@ export class CallService {
         this.isCallStartedBs.next(false);
     }
 
+    /**
+     * Metodo para cerrar la llamada y destruir el peer para la posterior conexion a otra videollamada
+     */
     public destroyPeer() {
         this.mediaCall?.close();
         this.peer?.disconnect();

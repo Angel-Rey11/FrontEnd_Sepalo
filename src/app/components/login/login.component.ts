@@ -27,6 +27,11 @@ export class LoginComponent implements OnInit {
     
   }
   
+  /**
+   * Metodo para logearte, modal para mostrar que el login es incorrecto
+   * Controla en la base de datos si el usuario existe, si existe te accede al menu principal
+   * Guardamos el usuario en localStorage para luego poder usar su id
+   */
   async click() {
     const result = await this.http.getUser(this.userLogin,this.convertTextLogin()).toPromise();
     
@@ -42,6 +47,10 @@ export class LoginComponent implements OnInit {
       }
     }
 
+  /**
+   * Metodo para registrarse, creamos un usuario y lo guardamos en la base de datos
+   * Modales para controlar la creación de usuarios
+   */
   async SignUp() {
     const user: User = {
       username: this.userSign,
@@ -63,10 +72,18 @@ export class LoginComponent implements OnInit {
     
   }
 
+  /**
+   * 
+   * @returns la contraseña encriptada para la creación del usuario
+   */
   convertTextSign(): string {
     return SHA256(this.passSign).toString();
   }
 
+  /**
+   * 
+   * @returns la contraseña encriptada para ver si el usuario existe en la base de datos
+   */
   convertTextLogin(): string {
     return SHA256(this.passLogin).toString();
   }
