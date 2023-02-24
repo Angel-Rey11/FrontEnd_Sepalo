@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, of } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
@@ -10,6 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 import { SignalrService } from 'src/app/services/signalr.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { CajeroService } from 'src/app/services/cajero.service';
+import $ from 'jquery';
 
 declare var bootstrap: any;
 
@@ -24,6 +25,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   showCall:boolean = false;
   showButton:boolean = false;
   showLocalVideo:boolean = false;
+  callButton:boolean = false;
   id:number = null;
 
   @ViewChild('localVideo')
@@ -73,7 +75,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
       .subscribe((stream: MediaProvider | null) => {
         this.remoteVideo.nativeElement.srcObject = stream;
 
-        })
+    })
   }
 
   /**
@@ -105,11 +107,13 @@ export class MainMenuComponent implements OnInit, OnDestroy {
    * Destruimos el peer y creamos uno nuevo para la siguiente conexion peer to peer
    */
   public endCall() {
-    this.callService.destroyPeer();
-    this.callService.initPeer();
+    //this.callService.destroyPeer();
+    //this.callService.initPeer();
+    this.callButton = false;
     this.showButton = false;
     this.showCall = false;
     this.showLocalVideo = false;
+    /*
     this.http.callIn.estado = 2;
     this.http.updateCall(this.http.callIn.id,this.http.callIn).subscribe(
       data => {
@@ -119,9 +123,8 @@ export class MainMenuComponent implements OnInit, OnDestroy {
         console.log(error)
       }
     );
+    */
     this.remoteVideo.nativeElement.srcObject=undefined;
-    //this.CloseAccordion("collapseOne1");
-    //this.ExpandAccordion("collapseOne2");
   }
 
   /**
@@ -130,11 +133,13 @@ export class MainMenuComponent implements OnInit, OnDestroy {
    * @param Call llamada que queremos updatear y guardar para el posterior uso
    */
   public update(Call:Call) {
+    this.callButton = true;
     this.showLocalVideo = true;
     this.showButton = true;
-    const user = this.local.getUser();
-    Call.estado = 1;
-    Call.userId = user.id;
+    //const user = this.local.getUser();
+    //Call.estado = 1;
+    //Call.userId = user.id;
+    /*
     this.http.updateCall(Call.id, Call).subscribe(
       data => {
         console.log("EXITO")
@@ -143,13 +148,14 @@ export class MainMenuComponent implements OnInit, OnDestroy {
         console.log(error)
       }
     );
+    */
     this.showCall = true;
     this.id = Call.cajeroId;
-    this.callService.establishMediaCall(Call.p2p,()=>{
-      this.endCall();
-    });
-    this.http.callIn = Call;
-    //this.CloseAccordion("collapseOne2");
+    //this.callService.establishMediaCall(Call.p2p,()=>{
+    //  this.endCall();
+    //});
+    //this.http.callIn = Call;
+    this.CloseAccordion("collapseOne2");
   }
 
   /**
