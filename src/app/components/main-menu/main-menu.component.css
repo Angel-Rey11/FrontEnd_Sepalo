@@ -198,4 +198,8 @@ td {
 #spinner {
     display: none; 
     z-index: 9999;
-  }
+}
+
+.btn-disabled {
+    background-color: #ffcc00;
+}
