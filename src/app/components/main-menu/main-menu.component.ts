@@ -10,7 +10,6 @@ import { UserService } from 'src/app/services/user.service';
 import { SignalrService } from 'src/app/services/signalr.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { CajeroService } from 'src/app/services/cajero.service';
-import $ from 'jquery';
 
 declare var bootstrap: any;
 
@@ -27,6 +26,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
   showLocalVideo:boolean = false;
   callButton:boolean = false;
   id:number = null;
+  private tooltipList = new Array<any>();
 
   @ViewChild('localVideo')
   localVideo!: ElementRef<HTMLVideoElement>;

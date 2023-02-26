@@ -194,7 +194,11 @@ a {
 }
 
 #liveToast2 {
-    background-color: green !important;
+    background-color: rgba(255, 0, 0, 0.562) !important;
+}
+
+#liveToast4 {
+    background-color: rgba(255, 0, 0, 0.562) !important;
 }
 
 #liveToast3 {
@@ -203,4 +207,9 @@ a {
 
 .toast-body {
     color: white;
+}
+
+#spinner {
+    display: none; 
+    z-index: 9999;
 }

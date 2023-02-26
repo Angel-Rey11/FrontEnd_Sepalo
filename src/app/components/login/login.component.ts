@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {Router} from "@angular/router";
 import { UserService } from 'src/app/services/user.service';
-import * as CryptoJS from 'crypto-js';
 import { SHA256 } from 'crypto-js';
 import { User } from 'src/app/model/User';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
@@ -24,7 +23,6 @@ export class LoginComponent implements OnInit {
   constructor(private router:Router,private readonly http: UserService, private local:LocalStorageService) { }
 
   async ngOnInit() {
-    
   }
   
   /**
@@ -33,18 +31,22 @@ export class LoginComponent implements OnInit {
    * Guardamos el usuario en localStorage para luego poder usar su id
    */
   async click() {
-    const result = await this.http.getUser(this.userLogin,this.convertTextLogin()).toPromise();
-    
-    if(result != null) {
-      const {password,...newresult} = result;
-        this.local.create(newresult);
-        this.router.navigate(['/main-menu']);
-    } else {
-      const toastLiveExample = document.getElementById('liveToast')
-          const toast = new bootstrap.Toast(toastLiveExample)
-      
-          toast.show()
+    try {
+      const result = await this.http.getUser(this.userLogin,this.convertTextLogin()).toPromise();
+      if(result != null) {
+        const {password,...newresult} = result;
+          this.local.create(newresult);
+          this.router.navigate(['/main-menu']);
+      } else {
+        const toastLiveExample = document.getElementById('liveToast')
+        const toast = new bootstrap.Toast(toastLiveExample)
+        toast.show()
       }
+    } catch {
+      const toastLiveExample = document.getElementById('liveToast2')
+      const toast = new bootstrap.Toast(toastLiveExample)
+      toast.show()
+    }
     }
 
   /**
@@ -57,19 +59,25 @@ export class LoginComponent implements OnInit {
       password: this.convertTextSign()
     };
     
-    if(user != null && this.passSign == this.passRepeat) {
-      await this.http.postUser(user).toPromise();
-      const toastLiveExample = document.getElementById('liveToast3')
+    try {
+      if(user != null && this.passSign == this.passRepeat) {
+        await this.http.postUser(user).toPromise();
+        const toastLiveExample = document.getElementById('liveToast3')
         const toast = new bootstrap.Toast(toastLiveExample)
-    
         toast.show()
         this.userSign = '';
         this.passSign = '';
         this.passRepeat = '';
-    } else {
-      console.log("No se ha podido insertar el usuario");
+      } else {
+        const toastLiveExample = document.getElementById('liveToast4')
+        const toast = new bootstrap.Toast(toastLiveExample)
+        toast.show();
+      }
+    } catch {
+      const toastLiveExample = document.getElementById('liveToast2')
+      const toast = new bootstrap.Toast(toastLiveExample)
+      toast.show();
     }
-    
   }
 
   /**
