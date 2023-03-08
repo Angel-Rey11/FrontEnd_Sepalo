@@ -9,7 +9,7 @@ import * as RFB from '@novnc/novnc/core/rfb';
 export class RemoteComponent implements OnInit {
   @ViewChild('windowVNC') window;
   private vnc:any
-  private port = "5900";
+  private port = "26901";
   private target;
   private path = "";
   public connected = false;
